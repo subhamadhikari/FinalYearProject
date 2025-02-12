@@ -11,6 +11,8 @@ from db.configurations import SessionLocal,engine,Base
 
 from models.user import User
 
+from utils.auth_utils import encrypt_pass
+
 def db_session():
     session = SessionLocal()
     try:
@@ -28,8 +30,10 @@ def register(user:UserSchema,session:Session = Depends(db_session)):
     # hash_password,salt = encrypt_pass(user.password)
     print("new?")
     try:
-        new_user = User(salt="s",encryptPassword=user.password,email = user.email,
-                        phoneNumber=user.phoneNumber,userFirstName=user.userFirstName,userLastName=user.userLastName)
+        hash_password,salt = encrypt_pass(user.password)
+        new_user = User(salt=salt,encryptPassword=hash_password,email = user.email,
+                        phoneNumber=user.phoneNumber,userFirstName=user.userFirstName,userLastName=user.userLastName,
+                        userRole=user.userRole,userDOB=user.userDOB,hospitalID=user.hospitalID)
         session.add(new_user)
         session.commit()
         session.refresh(new_user)
