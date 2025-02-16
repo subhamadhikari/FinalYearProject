@@ -3,14 +3,14 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 
 import os
-import uvicorn
 
 from db.configurations import SessionLocal,engine,Base
 
 
 from schemas.user_schema import UserSchema
+from models import user,hospital
 
-from controllers import auth_controller,segmentation_controller
+from controllers import auth_controller,segmentation_controller,hospital_controller,user_controller
 
 
 app = FastAPI(bind=engine)
@@ -54,6 +54,8 @@ app.add_middleware(
 print("HI")
 app.include_router(auth_controller.router)
 app.include_router(segmentation_controller.router)
+app.include_router(hospital_controller.router)
+app.include_router(user_controller.router)
 
 # if __name__=="main":
 #     uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)
