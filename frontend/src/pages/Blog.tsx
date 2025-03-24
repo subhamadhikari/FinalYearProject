@@ -7,8 +7,12 @@ import Post from '../components/Post'
 import BlogField from '../components/BlogField'
 import { BlogDetails } from '../types/blog'
 import { getAllBlogs } from '../api/blog'
+import DropdownUser from '../components/Header/DropdownUser'
+import { AuthUser } from '../types/user'
 
-type Props = {}
+type Props = {
+    user?:AuthUser|null
+}
 
 const Blog = (props: Props) => {
     const [createForm, setCreateForm] = useState<boolean>(false)
@@ -26,6 +30,7 @@ const Blog = (props: Props) => {
         async function fetchAllBlogs() {
             const blogs:BlogDetails[] = await getAllBlogs()
             setBlogList(blogs)
+            console.log("all blogs",blogs)
         }
         fetchAllBlogs()
         
@@ -42,7 +47,8 @@ const Blog = (props: Props) => {
         </div>
         <div id='top-left' className='flex flex-row items-center justify-around flex-[0.1]'>
             <img src={write} height={30} width={30} onClick={toggleForm} className='cursor-pointer transition-all delay-100 duration-100 hover:-translate-y-1 hover:scale-110'/>
-            <img src={user} height={50} width={50}/>
+            {/* <img src={user} height={50} width={50}/> */}
+            <DropdownUser page='blog' user={props.user}/>
         </div>
     </div>
 
@@ -58,12 +64,7 @@ const Blog = (props: Props) => {
             blogList.map((blog,key) => {
                 return(
                     <>
-                    <Post fetchedBlogs={blog} key={key}/>
-                    <Post fetchedBlogs={blog} key={key}/>
-                    <Post fetchedBlogs={blog} key={key}/>
-                    <Post fetchedBlogs={blog} key={key}/>
-                    <Post fetchedBlogs={blog} key={key}/>
-                    <Post fetchedBlogs={blog} key={key}/>
+                    <Post fetchedBlogs={blog} key={key} />
                     </>
                 )
             })
