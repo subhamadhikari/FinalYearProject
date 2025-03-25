@@ -27,3 +27,16 @@ class PatientSchema(BaseModel):
 
     class Config:
         orm_mode = True
+
+class RecentPatient(BaseModel):
+    email: str
+    userID: int
+    segmentationMRI: str
+    feedbackID: int
+    fullName: str
+    age: int
+    tumorSeverity: str
+    hospitalName: str
+
+    class Config:
+        orm_mode = True

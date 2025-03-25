@@ -14,3 +14,16 @@ class HospitalSchema(HospitalInfo):
 
     class Config:
         orm_mode = True
+
+
+class HospitalResponse(HospitalSchema):
+    class Config:
+        orm_mode = True
+
+
+class HospitalAssociation(BaseModel):
+    hospitalID: int
+    doctorID: int
+
+    class Config:
+        orm_mode=True
